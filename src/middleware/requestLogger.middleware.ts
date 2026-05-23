@@ -9,6 +9,8 @@ async function createLogger(log: {date: string, method: string, url: string, sta
 }
 
 function requestLoggerMiddleware(req: Request, res: Response, next: NextFunction) {
+    if (process.env.NODE_ENV !== "development") next()
+
     const start = Date.now();
 
     res.on("finish", () => {

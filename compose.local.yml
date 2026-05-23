@@ -1,0 +1,20 @@
+services:
+  backend:
+    build:
+      context: .
+      target: dev
+    container_name: iptu-backend-local
+    env_file:
+      - .env
+    ports:
+      - "6701:3001"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: sh -c "npm install && npm run dev"
+    networks:
+      - iptu_network
+
+networks:
+  iptu_network:
+    driver: bridge
