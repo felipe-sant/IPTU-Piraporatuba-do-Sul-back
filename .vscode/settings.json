@@ -1,0 +1,17 @@
+{
+    "git.enabled": true,
+    "files.exclude": {
+        "**/.git": true,
+        "**/node_modules": true,
+        ".gitignore": false,
+        ".vscode": true,
+        "README.md": false,
+        "package-lock.json": true,
+        "package.json": false,
+        "tsconfig.json": true,
+        "LICENSE": true,
+    },
+    "material-icon-theme.files.associations": {
+        "*.repository.ts": "database"
+    }
+}
