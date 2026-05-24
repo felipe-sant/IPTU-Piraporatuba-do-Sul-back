@@ -53,7 +53,7 @@ class UserRepository {
 
     /* TODO: aplicar na camada service o hashpassword */
     async updatePassword(password: string, id: string): Promise<void> {
-        const query = `UPDATE usuario SET password = $1 WHERE id = $2`
+        const query = `UPDATE usuario SET senha = $1 WHERE id = $2`
         await db.query(query, [password, id])
     }
 
