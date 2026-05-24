@@ -1,4 +1,4 @@
-import UserRepository, { UserCreateDTO } from "../repositories/user.repository";
+import UserRepository from "../repositories/user.repository";
 
 class UserService {
     private userRepository = new UserRepository()

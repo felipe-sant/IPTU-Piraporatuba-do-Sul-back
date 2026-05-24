@@ -10,13 +10,13 @@ export type UserDTO = {
 }
 
 export type UserCreateDTO = Omit<UserDTO, "id">
-export type UserReadDTO = Omit<UserDTO, "senha" | "tipo_usuario">
+export type UserReadDTO = Omit<UserDTO, "senha" | "tipo_usuario_id">
 export type UserUpdateDTO = Partial<UserCreateDTO>
 export type UserLoginDTO = Omit<UserDTO, "nome">
 
 class UserRepository {
     async createNewUser(element: UserCreateDTO): Promise<void> {
-        const query = "INSERT INTO usuario VALUES (DEFAULT, $1, $2, $3, $4)"
+        const query = "INSERT INTO usuario (nome, email, senha, tipo_usuario) VALUES ($1, $2, $3, $4)"
         await db.query(query, [element.nome, element.email, element.senha, element.tipo_usuario])
     }
 
@@ -54,7 +54,12 @@ class UserRepository {
         const query = "SELECT senha FROM usuario WHERE email = $1"
         const res = await db.query(query, [email])
         if (res.rowCount === 0) return false
-        return bcrypt.compareSync(senha, res.rows[0].senha)
+        return await new Promise<boolean>((resolve, reject) => {
+            bcrypt.compare(senha, res.rows[0].senha, (err, same) => {
+                if (err) return reject(err)
+                resolve(!!same)
+            })
+        })
     }
 }
 
